@@ -1,3 +1,5 @@
+local modname = "__blueprint_flip_and_turn__"
+
 data:extend(
 {
   {
@@ -22,7 +24,7 @@ data.raw["gui-style"].default["blpflip_button_horizontal"] =
     font = "blpflip_font",
     default_graphical_set =
     {
-        filename = "__Blueprint_Flip_Turn_017__/graphics/gui.png",
+        filename = modname .. "/graphics/gui.png",
         priority = "extra-high-no-scale",
         width = 36,
         height = 36,
@@ -31,7 +33,7 @@ data.raw["gui-style"].default["blpflip_button_horizontal"] =
     },
     hovered_graphical_set =
     {
-        filename = "__Blueprint_Flip_Turn_017__/graphics/gui.png",
+        filename = modname .. "/graphics/gui.png",
         priority = "extra-high-no-scale",
         width = 36,
         height = 36,
@@ -40,7 +42,7 @@ data.raw["gui-style"].default["blpflip_button_horizontal"] =
     },
     clicked_graphical_set =
     {
-        filename = "__Blueprint_Flip_Turn_017__/graphics/gui.png",
+        filename = modname .. "/graphics/gui.png",
         width = 36,
         height = 36,
         x = 0,
@@ -66,7 +68,7 @@ data.raw["gui-style"].default["blpflip_button_vertical"] =
     font = "blpflip_font",
     default_graphical_set =
     {
-        filename = "__Blueprint_Flip_Turn_017__/graphics/gui.png",
+        filename = modname .. "/graphics/gui.png",
         priority = "extra-high-no-scale",
         width = 36,
         height = 36,
@@ -75,7 +77,7 @@ data.raw["gui-style"].default["blpflip_button_vertical"] =
     },
     hovered_graphical_set =
     {
-        filename = "__Blueprint_Flip_Turn_017__/graphics/gui.png",
+        filename = modname .. "/graphics/gui.png",
         priority = "extra-high-no-scale",
         width = 36,
         height = 36,
@@ -84,7 +86,7 @@ data.raw["gui-style"].default["blpflip_button_vertical"] =
     },
     clicked_graphical_set =
     {
-        filename = "__Blueprint_Flip_Turn_017__/graphics/gui.png",
+        filename = modname .. "/graphics/gui.png",
         width = 36,
         height = 36,
         x = 36,
