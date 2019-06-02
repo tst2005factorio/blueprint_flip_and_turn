@@ -1,9 +1,9 @@
 {
-  "name": "Blueprint_Flip_Turn_017",
-  "version": "1.0.0",
+  "name": "blueprint_flip_and_turn",
+  "version": "1.1.1",
   "factorio_version": "0.17",
   "title": "Blueprint Flipper and Turner",
-  "author": "Marty & GopherAtl, Roktaal, Humpfry",
+  "author": "Marty & GopherAtl, Roktaal, Humpfry, NovaM",
   "homepage": "",
   "contact": "",
   "description": "Mirrors/Flips a blueprint in hand, reupload of older mod I still like to use",
