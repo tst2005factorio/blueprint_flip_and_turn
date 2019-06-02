@@ -1,0 +1,11 @@
+{
+  "name": "Blueprint_Flip_Turn_017",
+  "version": "1.0.0",
+  "factorio_version": "0.17",
+  "title": "Blueprint Flipper and Turner",
+  "author": "Marty & GopherAtl, Roktaal, Humpfry",
+  "homepage": "",
+  "contact": "",
+  "description": "Mirrors/Flips a blueprint in hand, reupload of older mod I still like to use",
+  "dependencies": ["base >= 0.17.0"]
+}
