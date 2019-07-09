@@ -9,7 +9,7 @@ local function getBlueprintCursorStack(player)
 	if cursor.valid_for_read and (cursor.name == "blueprint" or cursor.name == "blueprint-book") and cursor.is_blueprint_setup() then --check if is a blueprint, work in book as well
 		return cursor
 	end
-	--[[ --old way setup -- OH my god Why??? 
+	--[[ --old way setup -- OH my god Why???
 	if cursor.valid_for_read and cursor.name == "blueprint" and cursor.is_blueprint_setup() then
 		return cursor
 	elseif cursor.valid_for_read and cursor.name == "blueprint-book" then
@@ -245,16 +245,20 @@ local function flip_h(player_index)
 	end
 end
 
+local function oldStrangeStuff(player_index)
+	-- remove other/older stuff ? --
+	if game.players[player_index].gui.top.blueprint_flipper_flow then
+		game.players[player_index].gui.top.blueprint_flipper_flow.destroy()
+	end
+end
+
 local function doButtons(player_index)
 	if not game.players[player_index].gui[blpflip_location].blpflip_flow then
 		local flow = game.players[player_index].gui[blpflip_location].add{type = "flow", name = "blpflip_flow", direction = blpflip_flow_direction}
 		flow.add{type = "button", name = "blueprint_flip_horizontal", style = "blpflip_button_horizontal"}
 		flow.add{type = "button", name = "blueprint_flip_vertical", style = "blpflip_button_vertical"}
 	end
-	-- remove other/older stuff ? --
-	if game.players[player_index].gui.top.blueprint_flipper_flow then
-		game.players[player_index].gui.top.blueprint_flipper_flow.destroy()
-	end
+	oldStrangeStufff(player_index)
 end
 -- hide buttons = remove them --
 local function rmButtons(player_index)
@@ -272,7 +276,7 @@ local function manageButtons(player_index)
 	-- get the user setting --
 	local show_buttons = get_user_setting(player_index, "blueprint_flip_and_turn_show_buttons")
 	-- it should be true or false (not nil)
-	--if show_buttons == nil then show_buttons = true end 
+	--if show_buttons == nil then show_buttons = true end
 
 	if show_buttons then
 		--game.print("DEBUG: show_buttons yes (doButtons)")
@@ -296,21 +300,24 @@ local function manageButtonsAllPlayers()
 	for player_index=1,#game.players do manageButtons(player_index) end
 end
 -- create buttons --
-script.on_event(defines.events.on_player_created,function(event) 
+script.on_event(defines.events.on_player_created,function(event)
 	--game.print("DEBUG: EVENT on_player_created")
 	manageButtons(event.player_index)
 end)
+-- compat-check: defines.events.on_player_created  0.16/0.17 ok
 
 script.on_configuration_changed(function(data)
 	--game.print("DEBUG: EVENT on_configuration_changed")
 	manageButtonsAllPlayers()
 end)
+-- compat-check: script.on_configuration_changed 0.16/0.17 ok
 
 script.on_init(function()
 	--game.print("DEBUG: EVENT on_init")
 	manageButtonsAllPlayers()
 	--for i=1,#game.players do manageButtons(i) end
 end)
+-- compat-check: script.on_init 0.16/0.17 ok
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
 	-- player_index: the player index
@@ -322,6 +329,7 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
 		manageButtons(event.player_index)
 	end
 end)
+-- compat-check: defines.events.on_runtime_mod_setting_changed 0.16/0.17 ok
 
 -- actions by shortcut --
 script.on_event("blueprint_hotkey_flip_horizontal", function(event) flip_h(event.player_index) end)
