@@ -197,7 +197,14 @@ fv["express-splitter"] = fv["splitter"]
 
 --------------------------------------------------------------------
 -- the default handler --
+
+local function autowarning(ent)
+	if string.find(ent.name, "tank") or string.find(ent.name, "splitter") then
+		game.print("WARNING: possible tank or splitter not flipped (name="..tostring(ent.name)..")")
+	end
+end
 fv["*"] = function(ent)
+	autowarning(ent)
 	local dir = ent.direction or 0
 	if ent.direction then
 		ent.direction = (4 -dir +8)%8
@@ -214,6 +221,7 @@ end
 7	5
 ]]--
 fh["*"] = function(ent)
+	autowarning(ent)
 	local dir = ent.direction or 0
 	ent.direction = (16 - dir)%8
 end
@@ -227,6 +235,9 @@ fv["storage-tank-4"] = fv["storage-tank"] ; fh["storage-tank-4"] = fh["storage-t
 --------------------------------------------------------------------
 ---- Support Mini Machines' liquid tanks ----
 fv["mini-tank-1"] = fv["storage-tank"] ; fh["mini-tank-1"] = fh["storage-tank"]
+fv["mini-tank-2"] = fv["storage-tank"] ; fh["mini-tank-2"] = fh["storage-tank"]
+fv["mini-tank-3"] = fv["storage-tank"] ; fh["mini-tank-3"] = fh["storage-tank"]
+fv["mini-tank-4"] = fv["storage-tank"] ; fh["mini-tank-4"] = fh["storage-tank"]
 
 --------------------------------------------------------------------
 
