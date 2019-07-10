@@ -200,11 +200,11 @@ fv["express-splitter"] = fv["splitter"]
 
 local function autowarning(ent)
 	if string.find(ent.name, "tank") or string.find(ent.name, "splitter") then
-		game.print("WARNING: possible tank or splitter not flipped (name="..tostring(ent.name)..")")
+		game.print("[Blueprint Flip and Turn]WARNING: possible tank or splitter not flipped (name="..tostring(ent.name).."). Please report it.")
 	end
 end
 fv["*"] = function(ent)
-	autowarning(ent)
+	--autowarning(ent)
 	local dir = ent.direction or 0
 	if ent.direction then
 		ent.direction = (4 -dir +8)%8
@@ -221,7 +221,7 @@ end
 7	5
 ]]--
 fh["*"] = function(ent)
-	autowarning(ent)
+	--autowarning(ent)
 	local dir = ent.direction or 0
 	ent.direction = (16 - dir)%8
 end
