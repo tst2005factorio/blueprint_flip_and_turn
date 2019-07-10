@@ -1,8 +1,234 @@
---require("defines")
 
---TODO/FIXME: add a `local` prefix for `blpflip_location` and `blpflip_flow_direction` ?
-blpflip_location = "top" -- top/left/center
-blpflip_flow_direction = "horizontal" -- horizontal/vertical
+-- position and direction of the buttons
+local blpflip_location = "top" -- top/left/center
+local blpflip_flow_direction = "horizontal" -- horizontal/vertical
+
+
+local fv = {}
+local fh = {}
+
+--------------------------------------------------------------------
+---- curved-rail (Vanilla) ----
+
+fv["curved-rail"] = function(ent)
+	ent.direction = (5 - ent.direction +8)%8
+end
+--[[
+0	5
+1	4
+2	3
+3	2
+4	1
+5	0
+6	7
+7	6
+]]--
+fh["curved-rail"] = function(ent)
+	local dir = ent.direction
+	ent.direction = (9 - dir)%8
+end
+
+--------------------------------------------------------------------
+---- storage-tank (Vanilla) ----
+
+fv["storage-tank"] = function(ent)
+	if ent.direction == 2 or ent.direction == 6 then
+		ent.direction = 4
+	else
+		ent.direction = 2
+	end
+end
+--[[
+?0?	2
+2	4
+?4?	2
+6	4
+?*?	2
+]]--
+fh["storage-tank"] = function(ent)
+	local dir = ent.direction
+	if dir == 2 or dir == 6 then
+		ent.direction = 4
+	else
+		ent.direction = 2
+	end
+end
+
+
+
+--------------------------------------------------------------------
+---- rail-signal (Vanilla) ----
+
+fv["rail-signal"] = function(ent)
+	local dir = ent.direction or 0
+	if dir == 1 then
+		ent.direction = 7
+	elseif  dir == 2 then
+		ent.direction = 6
+	elseif  dir == 3 then
+		ent.direction = 5
+	elseif  dir == 5 then
+		ent.direction = 3
+	elseif  dir == 6 then
+		ent.direction = 2
+	elseif  dir == 7 then
+		ent.direction = 1
+	end
+end
+--[[
+(0	0)
+1	7
+2	6
+3	5
+(4	4)
+5	3
+6	2
+7	1
+]]--
+fh["rail-signal"] = function(ent)
+	local dir = ent.direction
+	if dir == 0 then
+		ent.direction = 4
+	elseif dir == 1 then
+		ent.direction = 3
+	elseif dir == 3 then
+		ent.direction = 1
+	elseif dir == 4 then
+		ent.direction = 0
+	elseif dir == 5 then
+		ent.direction = 7
+	elseif dir == 7 then
+		ent.direction = 5
+	end
+end
+
+---- rail-chain-signal (Vanilla) ----
+fv["rail-chain-signal"] = fv["rail-signal"]
+fh["rail-chain-signal"] = fh["rail-signal"]
+
+--------------------------------------------------------------------
+---- train-stop (Vanilla) ----
+
+fv["train-stop"] = function(ent)
+	local dir = ent.direction or 0
+	if dir == 2 then
+		ent.direction = 6
+	elseif  dir == 6 then
+		ent.direction = 2
+	end
+end
+--[[
+2	6
+6	2
+]]--
+fh["train-stop"] = function(ent)
+	local dir = ent.direction
+	if dir == 0 then
+		ent.direction = 4
+	elseif dir == 4 then
+		ent.direction = 0
+	end
+end
+
+
+--------------------------------------------------------------------
+-- splitter (Vanilla) ----
+
+fv["splitter"] = function(ent)
+	local dir = ent.direction or 0
+	--[[
+	Initial:
+		For a vertical flip (horizontal axe) (up/down) the "entities" with "name" equal to "splitter", "fast-splitter" or "express-splitter"
+		with "direction" 2 or 6 should toggle the "input_priority" and "output_priority" fields (if exists).
+	Update:
+		The flip rotate the splitter then we must toggle the left/right in all cases. No need to check the direction.
+	]]--
+	local function toggle_priority(pri)
+		return ({left="right",right="left"})[pri] or pri
+	end
+	if ent.input_priority then
+		ent.input_priority = toggle_priority(ent.input_priority)
+	end
+	if ent.output_priority then
+		ent.output_priority = toggle_priority(ent.output_priority)
+	end
+	ent.direction = (4 -dir +8)%8
+end
+--[[
+0	4
+1	3
+2	2
+3	1
+4	0
+5	7
+6	6
+7	5
+]]--
+fh["splitter"] = function(ent)
+	local dir = ent.direction
+	--[[
+		Initial:
+			For a horizontal flip (vertical axe) (left/right) the "entities" with "name" equal to "splitter", "fast-splitter" or "express-splitter"
+			with "direction" 0 or 4 should toggle the "input_priority" and "output_priority" fields (if exists).
+		Update:
+			The flip rotate the splitter then we must toggle the left/right in all cases. No need to check the direction.
+	]]--
+	local function toggle_priority(pri)
+		return ({left="right",right="left"})[pri] or pri
+	end
+	if ent.input_priority then
+		ent.input_priority = toggle_priority(ent.input_priority)
+	end
+	if ent.output_priority then
+		ent.output_priority = toggle_priority(ent.output_priority)
+	end
+	ent.direction = (16 - dir)%8
+end
+
+---- fast-splitter (Vanilla) ----
+fv["fast-splitter"] = fv["splitter"]
+fh["fast-splitter"] = fh["splitter"]
+
+
+---- express-splitter (Vanilla) ----
+fh["express-splitter"] = fh["splitter"]
+fv["express-splitter"] = fv["splitter"]
+
+
+--------------------------------------------------------------------
+-- the default handler --
+fv["*"] = function(ent)
+	local dir = ent.direction or 0
+	if ent.direction then
+		ent.direction = (4 -dir +8)%8
+	end
+end
+--[[
+0	4
+1	3
+2	2
+3	1
+4	0
+5	7
+6	6
+7	5
+]]--
+fh["*"] = function(ent)
+	local dir = ent.direction or 0
+	ent.direction = (16 - dir)%8
+end
+
+--------------------------------------------------------------------
+---- Support Bob's Logistics' liquid tanks ----
+fv["storage-tank-2"] = fv["storage-tank"] ; fh["storage-tank-2"] = fh["storage-tank"]
+fv["storage-tank-3"] = fv["storage-tank"] ; fh["storage-tank-3"] = fh["storage-tank"]
+fv["storage-tank-4"] = fv["storage-tank"] ; fh["storage-tank-4"] = fh["storage-tank"]
+
+--------------------------------------------------------------------
+---- Support Mini Machines' liquid tanks ----
+fv["mini-tank-1"] = fv["storage-tank"] ; fh["mini-tank-1"] = fh["storage-tank"]
+
+--------------------------------------------------------------------
 
 local function getBlueprintCursorStack(player)
 	local cursor = player.cursor_stack
@@ -20,121 +246,22 @@ local function getBlueprintCursorStack(player)
 			end
 		end
 	end
-	--]]
+	]]--
 	return nil
 end
+
 
 local function flip_v(player_index)
 	local player = game.players[player_index]
 	local cursor = getBlueprintCursorStack(player)
-	local ents = {}
 	if cursor then
 		if cursor.get_blueprint_entities() ~= nil then
-			ents = cursor.get_blueprint_entities()
+			local ents = cursor.get_blueprint_entities()
 			for i = 1, #ents do
 				local ent = ents[i]
-				local dir = ent.direction or 0
-				if ent.name == "curved-rail" then
-					ent.direction = (13 - dir)%8
---[[
-0	5
-1	4
-2	3
-3	2
-4	1
-5	0
-6	7
-7	6
-]]--
-
-				elseif ent.name == "storage-tank" then
---[[
-?0?	2
-2	4
-?4?	2
-6	4
-?*?	2
-]]--
-					if ent.direction == 2 or ent.direction == 6 then
-						ent.direction = 4
-					else
-						ent.direction = 2
-					end
-				elseif ent.name == "rail-signal" or ent.name == "rail-chain-signal" then
---[[
-(0	0)
-1	7
-2	6
-3	5
-(4	4)
-5	3
-6	2
-7	1
-]]--
-					if dir == 1 then
-						ent.direction = 7
-					elseif  dir == 2 then
-						ent.direction = 6
-					elseif  dir == 3 then
-						ent.direction = 5
-					elseif  dir == 5 then
-						ent.direction = 3
-					elseif  dir == 6 then
-						ent.direction = 2
-					elseif  dir == 7 then
-						ent.direction = 1
-					end
-				elseif ent.name == "train-stop" then
---[[
-2	6
-6	2
-]]--
-					if dir == 2 then
-						ent.direction = 6
-					elseif  dir == 6 then
-						ent.direction = 2
-					end
-				elseif ent.name == "splitter" or ent.name == "fast-splitter" or ent.name == "express-splitter" then
-					--[[
-					Initial:
-						For a vertical flip (horizontal axe) (up/down) the "entities" with "name" equal to "splitter", "fast-splitter" or "express-splitter"
-						with "direction" 2 or 6 should toggle the "input_priority" and "output_priority" fields (if exists).
-					Update:
-						The flip rotate the splitter then we must toggle the left/right in all cases. No need to check the direction.
-					]]--
-					local function toggle_priority(pri)
-						return ({left="right",right="left"})[pri] or pri
-					end
-					if ent.input_priority then
-						ent.input_priority = toggle_priority(ent.input_priority)
-					end
-					if ent.output_priority then
-						ent.output_priority = toggle_priority(ent.output_priority)
-					end
-					ent.direction = (12 - dir)%8
---[[
-0	4
-1	3
-2	2
-3	1
-4	0
-5	7
-6	6
-7	5
-]]--
-				else
-					ent.direction = (12 - dir)%8
---[[
-0	4
-1	3
-2	2
-3	1
-4	0
-5	7
-6	6
-7	5
-]]--
-				end
+				--local dir = ent.direction or 0
+				local handler = fv[ent.name] or fv["*"]
+				handler(ent)
 				ent.position.y = -ent.position.y
 				if ent.drop_position then
 					ent.drop_position.y = -ent.drop_position.y
@@ -147,8 +274,8 @@ local function flip_v(player_index)
 		end
 		-- also flip tiles if they exists in the blueprint
 		if cursor.get_blueprint_tiles() ~= nil then
-			ents = cursor.get_blueprint_tiles()
-			for i = 1, #ents do			-- TOSEE,IMPROVE: for i,ent in ipairs(ents) do ... end
+			local ents = cursor.get_blueprint_tiles()
+			for i = 1, #ents do
 				local ent = ents[i]
 				local dir = ent.direction or 0
 				ent.direction = (12 - dir)%8
@@ -162,66 +289,14 @@ end
 local function flip_h(player_index)
 	local player = game.players[player_index]
 	local cursor = getBlueprintCursorStack(player)
-	local ents = {}
 	if cursor then
 		if cursor.get_blueprint_entities() ~= nil then
-			ents = cursor.get_blueprint_entities()
+			local ents = cursor.get_blueprint_entities()
 			for i = 1, #ents do
 				local ent = ents[i]
 				local dir = ent.direction or 0
-				if ent.name == "curved-rail" then
-					ent.direction = (9 - dir)%8
-				elseif ent.name == "storage-tank" then
-					if dir == 2 or dir == 6 then
-						ent.direction = 4
-					else
-						ent.direction = 2
-					end
-				elseif ent.name == "rail-signal" or ent.name == "rail-chain-signal" then
-					--player.print("1. " .. ent.name .. ": " .. dir)
-					if dir == 0 then
-						ent.direction = 4
-					elseif dir == 1 then
-						ent.direction = 3
-					elseif dir == 3 then
-						ent.direction = 1
-					elseif dir == 4 then
-						ent.direction = 0
-					elseif dir == 5 then
-						ent.direction = 7
-					elseif dir == 7 then
-						ent.direction = 5
-					end
-					--player.print("2. " .. ent.name .. ": " .. ent.direction)
-				elseif ent.name == "train-stop" then
-					--player.print("1. " .. ent.name .. ": " .. dir)
-					if dir == 0 then
-						ent.direction = 4
-					elseif  dir == 4 then
-						ent.direction = 0
-					end
-					--player.print("2. " .. ent.name .. ": " .. ent.direction)
-				elseif ent.name == "splitter" or ent.name == "fast-splitter" or ent.name == "express-splitter" then
-					--[[
-					Initial:
-						For a horizontal flip (vertical axe) (left/right) the "entities" with "name" equal to "splitter", "fast-splitter" or "express-splitter"
-						with "direction" 0 or 4 should toggle the "input_priority" and "output_priority" fields (if exists).
-					Update:
-						The flip rotate the splitter then we must toggle the left/right in all cases. No need to check the direction.
-					]]--
-					local function toggle_priority(pri)
-						return ({left="right",right="left"})[pri] or pri
-					end
-					if ent.input_priority then
-						ent.input_priority = toggle_priority(ent.input_priority)
-					end
-					if ent.output_priority then
-						ent.output_priority = toggle_priority(ent.output_priority)
-					end
-					ent.direction = (16 - dir)%8
-				else
-					ent.direction = (16 - dir)%8
-				end
+				local handler = fh[ent.name] or fh["*"]
+				handler(ent)
 				ent.position.x = -ent.position.x
 				if ent.drop_position then
 					ent.drop_position.x = -ent.drop_position.x
@@ -233,7 +308,7 @@ local function flip_h(player_index)
 			cursor.set_blueprint_entities(ents)
 		end
 		if cursor.get_blueprint_tiles() ~= nil then
-			ents = cursor.get_blueprint_tiles()
+			local ents = cursor.get_blueprint_tiles()
 			for i = 1, #ents do
 				local ent = ents[i]
 				local dir = ent.direction or 0
@@ -258,8 +333,9 @@ local function doButtons(player_index)
 		flow.add{type = "button", name = "blueprint_flip_horizontal", style = "blpflip_button_horizontal"}
 		flow.add{type = "button", name = "blueprint_flip_vertical", style = "blpflip_button_vertical"}
 	end
-	oldStrangeStufff(player_index)
+	oldStrangeStuff(player_index)
 end
+
 -- hide buttons = remove them --
 local function rmButtons(player_index)
 	if game.players[player_index].gui[blpflip_location].blpflip_flow then
