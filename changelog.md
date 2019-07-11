@@ -2,6 +2,10 @@ Mirrors/Flips a blueprint in hand. A maintained version.
 
 # Changelog
 
+## v1.3.2
+
+- Fixed bug introduced during the refactoring : ent.direction can be `nil` (fixed to 0). (Reported by [AFORBES2018](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5d26742326bc65000b16b47b))
+
 ## v1.3.1
 
 - Show supported thirdparty mods as optionnal dependencies
