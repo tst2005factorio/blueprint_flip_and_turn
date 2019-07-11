@@ -11,7 +11,8 @@ local fh = {}
 ---- curved-rail (Vanilla) ----
 
 fv["curved-rail"] = function(ent)
-	ent.direction = (5 - ent.direction +8)%8
+	local dir = ent.direction or 0
+	ent.direction = (5 - dir +8)%8
 end
 --[[
 0	5
@@ -24,8 +25,8 @@ end
 7	6
 ]]--
 fh["curved-rail"] = function(ent)
-	local dir = ent.direction
-	ent.direction = (9 - dir)%8
+	local dir = ent.direction or 0
+	ent.direction = (1 - dir +8)%8
 end
 
 --------------------------------------------------------------------
@@ -46,8 +47,7 @@ end
 ?*?	2
 ]]--
 fh["storage-tank"] = function(ent)
-	local dir = ent.direction
-	if dir == 2 or dir == 6 then
+	if ent.direction == 2 or ent.direction == 6 then
 		ent.direction = 4
 	else
 		ent.direction = 2
@@ -86,7 +86,7 @@ end
 7	1
 ]]--
 fh["rail-signal"] = function(ent)
-	local dir = ent.direction
+	local dir = ent.direction or 0
 	if dir == 0 then
 		ent.direction = 4
 	elseif dir == 1 then
@@ -122,7 +122,7 @@ end
 6	2
 ]]--
 fh["train-stop"] = function(ent)
-	local dir = ent.direction
+	local dir = ent.direction or 0
 	if dir == 0 then
 		ent.direction = 4
 	elseif dir == 4 then
@@ -165,7 +165,7 @@ end
 7	5
 ]]--
 fh["splitter"] = function(ent)
-	local dir = ent.direction
+	local dir = ent.direction or 0
 	--[[
 		Initial:
 			For a horizontal flip (vertical axe) (left/right) the "entities" with "name" equal to "splitter", "fast-splitter" or "express-splitter"
