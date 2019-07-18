@@ -206,9 +206,7 @@ end
 fv["*"] = function(ent)
 	--autowarning(ent)
 	local dir = ent.direction or 0
-	if ent.direction then
-		ent.direction = (4 -dir +8)%8
-	end
+	ent.direction = (4 -dir +8)%8
 end
 --[[
 0	4
@@ -223,7 +221,7 @@ end
 fh["*"] = function(ent)
 	--autowarning(ent)
 	local dir = ent.direction or 0
-	ent.direction = (16 - dir)%8
+	ent.direction = (8 -dir +8)%8
 end
 
 --------------------------------------------------------------------
@@ -270,9 +268,10 @@ local function flip_v(player_index)
 			local ents = cursor.get_blueprint_entities()
 			for i = 1, #ents do
 				local ent = ents[i]
-				--local dir = ent.direction or 0
+--				local dir = ent.direction or 0
 				local handler = fv[ent.name] or fv["*"]
 				handler(ent)
+--game.print("DEBUG fv: "..tostring(i).."/"..tostring(#ents).." name="..tostring(ent.name).." dir="..dir.." ent.direction="..tostring(ent.direction).." handler="..(handler==fv["*"] and "default" or tostring(handler)) .. " ent is "..type(ent))
 				ent.position.y = -ent.position.y
 				if ent.drop_position then
 					ent.drop_position.y = -ent.drop_position.y
@@ -305,9 +304,10 @@ local function flip_h(player_index)
 			local ents = cursor.get_blueprint_entities()
 			for i = 1, #ents do
 				local ent = ents[i]
-				local dir = ent.direction or 0
+--				local dir = ent.direction or 0
 				local handler = fh[ent.name] or fh["*"]
 				handler(ent)
+--game.print("DEBUG fh: "..tostring(i).."/"..tostring(#ents).." name="..tostring(ent.name).." dir="..dir.." ent.direction="..tostring(ent.direction).." handler="..(handler==fh["*"] and "default" or tostring(handler)) )
 				ent.position.x = -ent.position.x
 				if ent.drop_position then
 					ent.drop_position.x = -ent.drop_position.x

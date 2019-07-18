@@ -2,6 +2,11 @@ Mirrors/Flips a blueprint in hand. A maintained version.
 
 # Changelog
 
+## v1.3.3
+
+- Fixed bug introduced during the refactoring affecting only the flip vertical's default handler : the bug affected entities without direction (equal to the north).
+(Reported by [coppercoil](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5d2e24e8455c29000be0de42))
+
 ## v1.3.2
 
 - Fixed bug introduced during the refactoring : ent.direction can be `nil` (fixed to 0). (Reported by [AFORBES2018](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5d26742326bc65000b16b47b))
