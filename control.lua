@@ -355,7 +355,15 @@ local function rmButtons(player_index)
 end
 
 local function get_user_setting(event_player_index, settingname)
-	return (settings.get_player_settings(game.get_player(event_player_index))[settingname] or {}).value
+	-- 0.16 game.player[N]
+	-- 0.17 game.get_player(N)
+	local ok, get_player = pcall(function() return game.get_player end) -- 0.17, but catch to avoid 0.16 error
+	if not ok or not get_player then
+		get_player = function(n) return game.players[n] end
+	end
+
+	--local get_player = (game and game.get_player) or (game and game.players and function(n) return game.players[n] end)
+	return (settings.get_player_settings(get_player(event_player_index))[settingname] or {}).value
 end
 
 -- create or hide buttons (per user) --
