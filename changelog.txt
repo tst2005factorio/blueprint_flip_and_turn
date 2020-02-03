@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 17.3.5
+Date: 2020-02-03
+  Packaging:
+    - The major version number will now follow the factorio release (17.x.y for factorio 0.17, etc) the minor and patch version number will follow the real mod evolution.
+---------------------------------------------------------------------------------------------------
 Version: 1.3.4
 Date: 2019-08-03
   Features:
