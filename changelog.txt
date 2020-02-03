@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 18.3.5
+Date: 2020-02-03
+  Packaging:
+    - The major version number will now follow the factorio release (18.x.y for factorio 0.18, 17.x.y for factorio 0.17, etc) the minor and patch version number will follow the real mod evolution.
+  Changes:
+    - Factorio 0.18 support. Only jump version. (Reported by [Zaflis](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5e289cf5893605000cf70644), )
+    - Factorio 0.18 support. Thanks ChurchOrganist to release a 0.18 compatible version of this mod. Even if you only change the version, You allow my to release quickly without testing this point.
+---------------------------------------------------------------------------------------------------
 Version: 17.3.5
 Date: 2020-02-03
   Packaging:
