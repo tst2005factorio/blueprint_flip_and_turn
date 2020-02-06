@@ -1,3 +1,9 @@
+
+---------------------------------------------------------------------------------------------------
+Version: 17.3.6
+Date: 2020-02-06
+  Bugfixes:
+    - Fixed bug that crash the game on MP server. (Reported by [slippycheeze](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5de48ff5daa848000bd28d6c))
 ---------------------------------------------------------------------------------------------------
 Version: 18.3.5
 Date: 2020-02-03
