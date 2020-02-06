@@ -241,6 +241,9 @@ fv["mini-tank-4"] = fv["storage-tank"] ; fh["mini-tank-4"] = fh["storage-tank"]
 
 local function getBlueprintCursorStack(player)
 	local cursor = player.cursor_stack
+	if cursor == nil then
+		return nil
+	end
 	if cursor.valid_for_read and (cursor.name == "blueprint" or cursor.name == "blueprint-book") and cursor.is_blueprint_setup() then --check if is a blueprint, work in book as well
 		return cursor
 	end
