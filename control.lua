@@ -366,7 +366,11 @@ local function get_user_setting(event_player_index, settingname)
 	end
 
 	--local get_player = (game and game.get_player) or (game and game.players and function(n) return game.players[n] end)
-	return (settings.get_player_settings(get_player(event_player_index))[settingname] or {}).value
+	local ok, value = pcall(function()
+		return (settings.get_player_settings(get_player(event_player_index))[settingname] or {}).value
+	end)
+	if not ok then return nil end -- protect against error, deleted user ? (see https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5e5d2b6d8c94fb000b3bd978)
+	return value
 end
 
 -- create or hide buttons (per user) --
