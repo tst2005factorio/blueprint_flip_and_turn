@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 18.4.0
+Date: 2020-03-04
+  Locale:
+    - Add the Russian-language localization. (Reported by [TheLastEagle](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f0a5b4fd622564d149dc855))
+---------------------------------------------------------------------------------------------------
+Version: 17.4.0
+Date: 2020-03-04
+  Locale:
+    - Add the Russian-language localization. (Reported by [TheLastEagle](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f0a5b4fd622564d149dc855))
+---------------------------------------------------------------------------------------------------
 Version: 18.3.7
 Date: 2020-03-04
   Bugfixes:
