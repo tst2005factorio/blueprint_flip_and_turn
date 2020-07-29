@@ -375,6 +375,9 @@ end
 
 -- create or hide buttons (per user) --
 local function manageButtons(player_index)
+	-- avoid strange case where player_index is nil
+	if not player_index then return end
+
 	-- get the user setting --
 	local show_buttons = get_user_setting(player_index, "blueprint_flip_and_turn_show_buttons")
 	-- it should be true or false (not nil)
