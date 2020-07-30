@@ -1,4 +1,9 @@
 
+local warning = warning or game.print
+local function modwarning(msg)
+	warning("[Blueprint Flip and Turn]WARNING: "..tostring(msg))
+end
+
 -- position and direction of the buttons
 local blpflip_location = "top" -- top/left/center
 local blpflip_flow_direction = "horizontal" -- horizontal/vertical
@@ -200,7 +205,7 @@ fv["express-splitter"] = fv["splitter"]
 
 local function autowarning(ent)
 	if string.find(ent.name, "tank") or string.find(ent.name, "splitter") then
-		game.print("[Blueprint Flip and Turn]WARNING: possible tank or splitter not flipped (name="..tostring(ent.name).."). Please report it.")
+		modwarning("possible tank or splitter not flipped (name="..tostring(ent.name).."). Please report it to the mod's Author.")
 	end
 end
 fv["*"] = function(ent)
@@ -238,6 +243,18 @@ fv["mini-tank-3"] = fv["storage-tank"] ; fh["mini-tank-3"] = fh["storage-tank"]
 fv["mini-tank-4"] = fv["storage-tank"] ; fh["mini-tank-4"] = fh["storage-tank"]
 
 --------------------------------------------------------------------
+-- a generic function to walk into structure to manage avoid error when it does not exists.
+local function walk(from, fields)
+	local x = from
+	for _,field in ipairs(fields) do
+		if type(x)~="table" or x[field] == nil then
+			return nil
+		end
+		x = x[field]
+	end
+	return x
+end
+
 
 local function getBlueprintCursorStack(player)
 	local cursor = player.cursor_stack
@@ -334,16 +351,24 @@ local function flip_h(player_index)
 	end
 end
 
+-- remove older mod stuff ? --
 local function oldStrangeStuff(player_index)
-	-- remove other/older stuff ? --
-	if game.players[player_index].gui.top.blueprint_flipper_flow then
-		game.players[player_index].gui.top.blueprint_flipper_flow.destroy()
+	local gui_top = walk(game, {"players", player_index, "gui", "top"})
+	if gui_top and gui_top.blueprint_flipper_flow  then
+		gui_top.blueprint_flipper_flow.destroy()
 	end
 end
 
 local function doButtons(player_index)
-	if not game.players[player_index].gui[blpflip_location].blpflip_flow then
-		local flow = game.players[player_index].gui[blpflip_location].add{type = "flow", name = "blpflip_flow", direction = blpflip_flow_direction}
+	local gui_location = walk(game, {"players", player_index, "gui", blpflip_location})
+	if not gui_location then
+		-- avoid error but there are something strange!
+		modwarning("doButtons: there is no gui_location for player_index="..tostring(player_index)..". Please report it to the mod's Author.")
+		return
+	end
+	local exists = walk(gui_location, "blpflip_flow"})
+	if not exists then
+		local flow = gui_location.add{type = "flow", name = "blpflip_flow", direction = blpflip_flow_direction}
 		flow.add{type = "button", name = "blueprint_flip_horizontal", style = "blpflip_button_horizontal"}
 		flow.add{type = "button", name = "blueprint_flip_vertical", style = "blpflip_button_vertical"}
 	end
@@ -352,8 +377,9 @@ end
 
 -- hide buttons = remove them --
 local function rmButtons(player_index)
-	if game.players[player_index].gui[blpflip_location].blpflip_flow then
-		game.players[player_index].gui[blpflip_location].blpflip_flow.destroy()
+	local exists = walk(game, {"players", player_index, "gui", blpflip_location, "blpflip_flow"})
+	if exists then
+		exists.destroy()
 	end
 end
 
