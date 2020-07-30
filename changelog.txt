@@ -1,13 +1,13 @@
 ---------------------------------------------------------------------------------------------------
-Version: 18.5.2
+Version: 18.5.3
 Date: 2020-07-30
   Bugfixes:
-    - Really Avoid crash where player_index is nil. (Reported by [Ritn](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f20c255b153a0da59a51d89)
+    - Avoid crash where player_index is nil. (Reported by [Ritn](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f20c255b153a0da59a51d89)
 ---------------------------------------------------------------------------------------------------
-Version: 17.5.2
+Version: 17.5.3
 Date: 2020-07-30
   Bugfixes:
-    - Really Avoid crash where player_index is nil. (Reported by [Ritn](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f20c255b153a0da59a51d89)
+    - Avoid crash where player_index is nil. (Reported by [Ritn](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f20c255b153a0da59a51d89)
 ---------------------------------------------------------------------------------------------------
 Version: 18.5.1
 Date: 2020-07-30

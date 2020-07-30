@@ -246,6 +246,7 @@ fv["mini-tank-4"] = fv["storage-tank"] ; fh["mini-tank-4"] = fh["storage-tank"]
 -- a generic function to walk into structure to manage avoid error when it does not exists.
 local function walk(from, fields)
 	local x = from
+	if type(fields)~="table" then fields = {fields} end
 	for _,field in ipairs(fields) do
 		if type(x)~="table" or x[field] == nil then
 			return nil
@@ -366,7 +367,7 @@ local function doButtons(player_index)
 		modwarning("doButtons: there is no gui_location for player_index="..tostring(player_index)..". Please report it to the mod's Author.")
 		return
 	end
-	local exists = walk(gui_location, "blpflip_flow"})
+	local exists = walk(gui_location, {"blpflip_flow"})
 	if not exists then
 		local flow = gui_location.add{type = "flow", name = "blpflip_flow", direction = blpflip_flow_direction}
 		flow.add{type = "button", name = "blueprint_flip_horizontal", style = "blpflip_button_horizontal"}
