@@ -1,7 +1,9 @@
 
-local warning = warning or game.print
 local function modwarning(msg)
-	warning("[Blueprint Flip and Turn]WARNING: "..tostring(msg))
+	local warning = warning or (game or {}).print or print
+	if warning then
+		warning("[Blueprint Flip and Turn]WARNING: "..tostring(msg))
+	end
 end
 
 -- position and direction of the buttons
