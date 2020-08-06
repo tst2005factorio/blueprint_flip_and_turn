@@ -1,6 +1,17 @@
 
+--[[if print then
+	print("print exists")
+	print("game.player", game and game.print)
+elseif io.stderr then
+	print = function(x) io.stderr:write(tostring(x).."\n") end
+end
+]]--
+if log then
+	log("COOL log exists !")
+end
 local function modwarning(msg)
-	local warning = warning or (game or {}).print or print
+	--local warning = warning or (game or {}).print or (player or {}).print or print or log
+	local warning = log
 	if warning then
 		warning("[Blueprint Flip and Turn]WARNING: "..tostring(msg))
 	end
@@ -264,10 +275,45 @@ local function getBlueprintCursorStack(player)
 	if cursor == nil then
 		return nil
 	end
+
+	-- legacy code protected to troubleshot the issue
+	local ok, v = pcall(function()
 	if cursor.valid_for_read and (cursor.name == "blueprint" or cursor.name == "blueprint-book") and cursor.is_blueprint_setup() then --check if is a blueprint, work in book as well
 		return cursor
 	end
-	--[[ --old way setup -- OH my god Why???
+	end)
+	if ok then return v end
+
+	modwarning("You got the issue : "..
+		table.concat({
+			tostring(cursor.name),
+			tostring(cursor.valid),
+			tostring(cursor.valid_for_read),
+--			tostring(cursor.is_blueprint_setup),
+--			tostring(cursor.is_blueprint_book),
+		}, ",")
+	)
+	-- super strict
+	if not cursor.valid then
+		error("issue found. solution 1a/3 can fix the issue. Please report this to NovaM")
+		return nil
+	end
+	if not cursor.valid_for_read then
+		error("issue found. solution 1b/3 can fix the issue. Please report this to NovaM")
+		return nil
+	end
+	if cursor.is_blueprint_setup and not cursor.is_blueprint_setup() then
+		error("issue found. solution 2/3 can fix this issue. Please report this to NovaM")
+		return nil
+	end
+	if not (cursor.is_blueprint or cursor.is_blueprint_book) then
+		error("issue found. solution 3/3 can fix this issue. Please report this to NovaM")
+		return nil
+	end
+	return cursor
+end
+--[[
+	--old way setup -- OH my god Why???
 	if cursor.valid_for_read and cursor.name == "blueprint" and cursor.is_blueprint_setup() then
 		return cursor
 	elseif cursor.valid_for_read and cursor.name == "blueprint-book" then
@@ -278,9 +324,7 @@ local function getBlueprintCursorStack(player)
 			end
 		end
 	end
-	]]--
-	return nil
-end
+]]--
 
 
 local function flip_v(player_index)
