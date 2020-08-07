@@ -11,6 +11,8 @@ local fv,fh = assert(flipdata.fv), assert(flipdata.fh)
 --------------------------------------------------------------------
 -- a generic function to walk into structure to manage avoid error when it does not exists.
 local walk = require "walk"
+local safecall = require "safecall"
+local get_user_setting = require "get_user_setting"
 
 local function getBlueprintCursorStack(player)
 	local cursor = player.cursor_stack
@@ -18,41 +20,14 @@ local function getBlueprintCursorStack(player)
 		return nil
 	end
 
-	-- legacy code protected to troubleshot the issue
-	local ok, v = pcall(function()
-	if cursor.valid_for_read and (cursor.name == "blueprint" or cursor.name == "blueprint-book") and cursor.is_blueprint_setup() then --check if is a blueprint, work in book as well
+	if (
+		cursor.valid and cursor.valid_for_read and
+		(cursor.is_blueprint or cursor.is_blueprint_book) and
+		safecall(cursor.is_blueprint_setup) -- 0.18 (>= 0.18.37 ?) can raise an error "Item is no blueprint", catch it to avoid game crash.
+	) then --check if is a blueprint, work in book as well
 		return cursor
 	end
-	end)
-	if ok then return v end
-
-	modwarning("You got the issue : "..
-		table.concat({
-			tostring(cursor.name),
-			tostring(cursor.valid),
-			tostring(cursor.valid_for_read),
---			tostring(cursor.is_blueprint_setup),
---			tostring(cursor.is_blueprint_book),
-		}, ",")
-	)
-	-- super strict
-	if not cursor.valid then
-		error("issue found. solution 1a/3 can fix the issue. Please report this to NovaM")
-		return nil
-	end
-	if not cursor.valid_for_read then
-		error("issue found. solution 1b/3 can fix the issue. Please report this to NovaM")
-		return nil
-	end
-	if cursor.is_blueprint_setup and not cursor.is_blueprint_setup() then
-		error("issue found. solution 2/3 can fix this issue. Please report this to NovaM")
-		return nil
-	end
-	if not (cursor.is_blueprint or cursor.is_blueprint_book) then
-		error("issue found. solution 3/3 can fix this issue. Please report this to NovaM")
-		return nil
-	end
-	return cursor
+	return nil
 end
 --[[
 	--old way setup -- OH my god Why???
@@ -67,7 +42,6 @@ end
 		end
 	end
 ]]--
-
 
 local function flip_v(player_index)
 	local player = game.players[player_index]
@@ -172,21 +146,6 @@ local function rmButtons(player_index)
 	end
 end
 
-local function get_user_setting(event_player_index, settingname)
-	-- 0.16 game.player[N]
-	-- 0.17 game.get_player(N)
-	local ok, get_player = pcall(function() return game.get_player end) -- 0.17, but catch to avoid 0.16 error
-	if not ok or not get_player then
-		get_player = function(n) return game.players[n] end
-	end
-
-	--local get_player = (game and game.get_player) or (game and game.players and function(n) return game.players[n] end)
-	local ok, value = pcall(function()
-		return (settings.get_player_settings(get_player(event_player_index))[settingname] or {}).value
-	end)
-	if not ok then return nil end -- protect against error, deleted user ? (see https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5e5d2b6d8c94fb000b3bd978)
-	return value
-end
 
 -- create or hide buttons (per user) --
 local function manageButtons(player_index)
