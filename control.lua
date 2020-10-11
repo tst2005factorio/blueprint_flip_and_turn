@@ -122,13 +122,13 @@ local function reverse_inserters(player_index)
 			local ents = cursor.get_blueprint_entities()
 			for i = 1, #ents do
 				local ent = ents[i]
-				if ent.drop_position then
-					ent.drop_position.y = -ent.drop_position.y
-					ent.drop_position.x = -ent.drop_position.x
-				end
-				if ent.pickup_position then
-					ent.pickup_position.y = -ent.pickup_position.y
-					ent.pickup_position.x = -ent.pickup_position.x
+				if ent.pickup_position and ent.drop_position then
+					local old_drop_y = ent.drop_position.y
+					local old_drop_x = ent.drop_position.x
+					ent.drop_position.y = ent.pickup_position.y
+					ent.drop_position.x = ent.pickup_position.x
+					ent.pickup_position.y = old_drop_y
+					ent.pickup_position.x = old_drop_x
 				end
 			end
 			cursor.set_blueprint_entities(ents)
