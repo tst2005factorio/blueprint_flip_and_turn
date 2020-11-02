@@ -238,4 +238,6 @@ end)
 -- actions by shortcut --
 script.on_event("blueprint_hotkey_flip_horizontal", function(event) flip_h(event.player_index) end)
 script.on_event("blueprint_hotkey_flip_vertical", function(event) flip_v(event.player_index) end)
+pcall(function()
 script.on_event("blueprint_hotkey_reverse_inserters", function(event) reverse_inserters(event.player_index) end)
+end)
