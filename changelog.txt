@@ -1,15 +1,15 @@
 ---------------------------------------------------------------------------------------------------
-Version: 100.8.2
+Version: 100.8.3
 Date: 2020-11-02
   Bugfixes:
     - Fix Crash related to the new Reverse Inserter event.
 ---------------------------------------------------------------------------------------------------
-Version: 18.8.2
+Version: 18.8.3
 Date: 2020-11-02
   Bugfixes:
     - Fix Crash related to the new Reverse Inserter event.
 ---------------------------------------------------------------------------------------------------
-Version: 17.8.2
+Version: 17.8.3
 Date: 2020-11-02
   Bugfixes:
     - Fix Crash related to the new Reverse Inserter event.

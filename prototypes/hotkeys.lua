@@ -12,6 +12,6 @@ data:extend({
   {
     type = "custom-input",
     name = "blueprint_hotkey_reverse_inserters",
-    --key_sequence = "SHIFT + C",
+    key_sequence = "SHIFT + C",
   },
 })
