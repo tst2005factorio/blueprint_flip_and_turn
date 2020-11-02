@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 18.8.0
+Date: 2020-11-02
+  Changes:
+    - Add MIT License file.
+  Features:
+    - Accept the "Reverse Inserters" button, submitted by [Rycochet](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f831c2a6da5e2a5968ea9eb) see also [on github](https://github.com/tst2005factorio/blueprint_flip_and_turn/pull/2). Thanks!
+---------------------------------------------------------------------------------------------------
+Version: 17.8.0
+Date: 2020-11-02
+  Changes:
+    - Add MIT License file.
+  Features:
+    - Accept the "Reverse Inserters" button, submitted by [Rycochet](https://mods.factorio.com/mod/blueprint_flip_and_turn/discussion/5f831c2a6da5e2a5968ea9eb) see also [on github](https://github.com/tst2005factorio/blueprint_flip_and_turn/pull/2). Thanks!
+---------------------------------------------------------------------------------------------------
 Version: 18.7.0
 Date: 2020-08-07
   Changes:
