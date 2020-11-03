@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 100.8.5
+Date: 2020-11-03
+  Bugfixes:
+    - Fix the bugfix to really disable the Reverse Inserter code
+---------------------------------------------------------------------------------------------------
+Version: 18.8.5
+Date: 2020-11-03
+  Bugfixes:
+    - Fix the bugfix to really disable the Reverse Inserter code
+---------------------------------------------------------------------------------------------------
+Version: 17.8.5
+Date: 2020-11-03
+  Bugfixes:
+    - Fix the bugfix to really disable the Reverse Inserter code
+---------------------------------------------------------------------------------------------------
 Version: 100.8.4
 Date: 2020-11-03
   Bugfixes:

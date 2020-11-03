@@ -115,6 +115,7 @@ data.raw["gui-style"].default["blpflip_button_vertical"] =
 	}
 }
 
+--[[
 data.raw["gui-style"].default["blpflip_button_reverseinserters"] =
 {
 	type = "button_style",
@@ -155,3 +156,4 @@ data.raw["gui-style"].default["blpflip_button_reverseinserters"] =
 		volume = 1
 	}
 }
+]]--
