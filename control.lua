@@ -156,7 +156,7 @@ local function doButtons(player_index)
 		local flow = gui_location.add{type = "flow", name = "blpflip_flow", direction = blpflip_flow_direction}
 		flow.add{type = "button", name = "blueprint_flip_horizontal", style = "blpflip_button_horizontal"}
 		flow.add{type = "button", name = "blueprint_flip_vertical", style = "blpflip_button_vertical"}
-		flow.add{type = "button", name = "blueprint_reverse_inserters", style = "blueprint_reverse_inserters"}
+--		flow.add{type = "button", name = "blueprint_reverse_inserters", style = "blpflip_button_reverse_inserters"}
 	end
 	oldStrangeStuff(player_index)
 end
@@ -238,6 +238,6 @@ end)
 -- actions by shortcut --
 script.on_event("blueprint_hotkey_flip_horizontal", function(event) flip_h(event.player_index) end)
 script.on_event("blueprint_hotkey_flip_vertical", function(event) flip_v(event.player_index) end)
-pcall(function()
-script.on_event("blueprint_hotkey_reverse_inserters", function(event) reverse_inserters(event.player_index) end)
-end)
+--pcall(function()
+--script.on_event("blueprint_hotkey_reverse_inserters", function(event) reverse_inserters(event.player_index) end)
+--end)

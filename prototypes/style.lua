@@ -49,7 +49,7 @@ data.raw["gui-style"].default["blpflip_button_horizontal"] =
 		priority = "extra-high-no-scale",
 		width = 36,
 		height = 36,
-		x = 0,
+		x = 0*36,
 		y = 0,
 	},
 	hovered_graphical_set = compat {
@@ -57,14 +57,14 @@ data.raw["gui-style"].default["blpflip_button_horizontal"] =
 		priority = "extra-high-no-scale",
 		width = 36,
 		height = 36,
-		x = 0,
+		x = 0*36,
 		y = 36,
 	},
 	clicked_graphical_set = compat {
 		filename = modname .. "/graphics/gui.png",
 		width = 36,
 		height = 36,
-		x = 0,
+		x = 0*36,
 		y = 36,
 	},
 	left_click_sound =
@@ -90,7 +90,7 @@ data.raw["gui-style"].default["blpflip_button_vertical"] =
 		priority = "extra-high-no-scale",
 		width = 36,
 		height = 36,
-		x = 36,
+		x = 1*36,
 		y = 0,
 	},
 	hovered_graphical_set = compat {
@@ -98,14 +98,55 @@ data.raw["gui-style"].default["blpflip_button_vertical"] =
 		priority = "extra-high-no-scale",
 		width = 36,
 		height = 36,
-		x = 36,
+		x = 1*36,
 		y = 36,
 	},
 	clicked_graphical_set = compat {
 		filename = modname .. "/graphics/gui.png",
 		width = 36,
 		height = 36,
-		x = 36,
+		x = 1*36,
+		y = 36,
+	},
+	left_click_sound =
+	{
+		filename = "__core__/sound/gui-click.ogg",
+		volume = 1
+	}
+}
+
+data.raw["gui-style"].default["blpflip_button_reverseinserters"] =
+{
+	type = "button_style",
+	parent = "button",
+	width = 36,
+	height = 36,
+	top_padding = 6,
+	right_padding = 0,
+	bottom_padding = 0,
+	left_padding = 0,
+	font = "blpflip_font",
+	default_graphical_set = compat {
+		filename = modname .. "/graphics/gui.png",
+		priority = "extra-high-no-scale",
+		width = 36,
+		height = 36,
+		x = 2*36,
+		y = 0,
+	},
+	hovered_graphical_set = compat {
+		filename = modname .. "/graphics/gui.png",
+		priority = "extra-high-no-scale",
+		width = 36,
+		height = 36,
+		x = 2*36,
+		y = 36,
+	},
+	clicked_graphical_set = compat {
+		filename = modname .. "/graphics/gui.png",
+		width = 36,
+		height = 36,
+		x = 2*36,
 		y = 36,
 	},
 	left_click_sound =

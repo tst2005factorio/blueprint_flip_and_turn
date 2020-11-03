@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 100.8.4
+Date: 2020-11-03
+  Bugfixes:
+    - Disable the Reverse Inserter code, integration seems not ready yet.
+---------------------------------------------------------------------------------------------------
+Version: 18.8.4
+Date: 2020-11-03
+  Bugfixes:
+    - Disable the Reverse Inserter code, integration seems not ready yet.
+---------------------------------------------------------------------------------------------------
+Version: 17.8.4
+Date: 2020-11-03
+  Bugfixes:
+    - Disable the Reverse Inserter code, integration seems not ready yet.
+---------------------------------------------------------------------------------------------------
 Version: 100.8.3
 Date: 2020-11-02
   Bugfixes:
