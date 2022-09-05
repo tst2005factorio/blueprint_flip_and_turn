@@ -25,6 +25,28 @@ fh["curved-rail"] = function(ent)
 end
 
 --------------------------------------------------------------------
+---- se-curved-rail (SE) ----
+
+fv["se-space-curved-rail"] = function(ent)
+	local dir = ent.direction or 0
+	ent.direction = (5 - dir +8)%8
+end
+--[[
+0	5
+1	4
+2	3
+3	2
+4	1
+5	0
+6	7
+7	6
+]]--
+fh["se-space-curved-rail"] = function(ent)
+	local dir = ent.direction or 0
+	ent.direction = (1 - dir +8)%8
+end
+
+--------------------------------------------------------------------
 ---- storage-tank (Vanilla) ----
 
 fv["storage-tank"] = function(ent)
